@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Oppgave 3</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+</head>
+<body>
+<h1>Oppgave 3</h1>
+<p>Implementer kalkulatoroppgaven fra forrige uke på nytt, <br>
+  slik at alle beregningene (pluss, minus, gange og dele) gjøres på tjener/server.<br>
+  Det skal sjekkes at input er tall både på klienten (i JavaScript/jQuery) og på serveren/tjeneren (i Java). <br>
+  Dersom det deles med 0 så bør det returneres en feilmelding fra server/tjener.</p>
+
+<br><br>
+<table>
+  <tr>
+    <td><label for="felt1">Felt 1</label> </td>
+    <td><label for="felt2">Felt 2</label> </td>
+  </tr>
+  <tr>
+    <td><input id="felt1"></td>
+    <td><input id="felt2"></td>
+  </tr>
+</table><table>
+  <tr>
+    <td><button id="add"> + </button> </td><td></td>
+    <td><button id="subtract"> - </button> </td><td></td>
+    <td><button id="multiply"> * </button> </td><td></td>
+    <td><button id="divide"> / </button> </td>
+  </tr>
+</table>
+<div id="result3"></div>
+
+<script type="application/javascript">
+  $("#add").click(function (){
+    let[felt1,felt2]=readInput();
+    if(!validateInput(felt1,felt2)){
+      return;
+    }
+    let url="/add?felt1="+felt1+"&felt2="+felt2;
+    $.get(url, function (data){
+      $("#result3").html(data);
+    })
+  })
+
+  $("#subtract").click(function (){
+    let[felt1,felt2]=readInput();
+    if(!validateInput(felt1,felt2)){
+      return;
+    }
+    let url="/subtract?felt1="+felt1+"&felt2="+felt2;
+    $.get(url, function (data){
+      $("#result3").html(data);
+    })
+  })
+
+  $("#multiply").click(function (){
+    let[felt1,felt2]=readInput();
+    if(!validateInput(felt1,felt2)){
+      return;
+    }
+    let url="/multiply?felt1="+felt1+"&felt2="+felt2;
+    $.get(url, function (data){
+      $("#result3").html(data);
+    })
+  })
+
+  $("#divide").click(function (){
+    let[felt1,felt2]=readInput();
+    if(!validateInput(felt1,felt2)){
+      return;
+    }
+    let url="/divide?felt1="+felt1+"&felt2="+felt2;
+    $.get(url, function (data){
+      $("#result3").html(data);
+    })
+  })
+
+  function readInput(){
+    let felt1=$("#felt1").val();
+    let felt2=$("#felt2").val();
+    return [felt1,felt2];
+  }
+
+  function validateInput(felt1,felt2){
+    if(felt1===""||felt2===""){
+      alert("Skriv inn i begge feltene!");
+      return false;
+    }
+    if(isNaN(felt1)||isNaN(felt2)){
+      alert("Skriv inn tall i begge feltene!")
+      return false;
+    }
+    return true;
+  }
+</script>
+</body>
+</html>
